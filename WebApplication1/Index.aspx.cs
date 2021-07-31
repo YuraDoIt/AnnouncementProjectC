@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -31,7 +32,9 @@ namespace WebApplication1
             using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
             {
                 sqlCon.Open();
-                MySqlCommand sqlCmd = new MySqlCommand
+                MySqlCommand sqlCmd = new MySqlCommand("posterAddorEdit", sqlCon);
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("_announcementID", Convert.ToInt32(hfP));
             }
         }
     }
