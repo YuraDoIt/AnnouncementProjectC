@@ -34,7 +34,8 @@ namespace WebApplication1
                 sqlCon.Open();
                 MySqlCommand sqlCmd = new MySqlCommand("posterAddorEdit", sqlCon);
                 sqlCmd.CommandType = CommandType.StoredProcedure;
-                sqlCmd.Parameters.AddWithValue("_announcementID", Convert.ToInt32(hfP));
+                sqlCmd.Parameters.AddWithValue("_announcementID", Convert.ToInt32(hfProductID.Value == "" ? "0" : hfProductID.Value));
+                //sqlCmd.Parameters.AddWithValue("_name", txt);
             }
         }
     }
