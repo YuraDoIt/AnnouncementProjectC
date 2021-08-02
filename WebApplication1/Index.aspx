@@ -9,96 +9,207 @@
     <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
     <script src="/scripts/jquery-2.1.0.min.js"></script>
+    
     <script type="text/javascript">
-        $(function () {
-            $("#txtDateAdd").mask("999-999-9999");
-        });
+
+       function toggle_visibility(id) {
+           var e = document.getElementById(id);
+           if(e.style.display == 'block')
+              e.style.display = 'none';
+           else
+              e.style.display = 'block';
+           }
+          
     </script>
+
+    <style>
+        * {
+           
+            padding:0px;
+            margin:0px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        
+
+        #Content{
+            padding:20px;
+        }
+
+        p {
+            font-size: 16pt;
+            padding-top:20px;
+            text-align:center; 
+            border-color: aquamarine;
+            background-color: aquamarine;
+            height : 45px;
+            font-weight: normal;
+        }
+
+        #btnShow{
+            margin-right:30px;
+        }
+
+        .button {
+          border: none;
+          color: white;
+          padding: 16px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          transition-duration: 0.4s;
+          cursor: pointer;
+          border-radius:12px;
+        }
+        /*Стилі для кнопок*/
+        #btnShow {
+            background-color: white; 
+            color: black;
+            border: 2px solid #4CAF50;
+        }
+
+        #btnShow:hover {
+          background-color: #4CAF50;
+          color: white;
+        }
+
+        #btnSave {
+            background-color: white; 
+            color: black; 
+            border: 2px solid #008CBA;
+        }
+
+        #btnSave:hover {
+          background-color: #008CBA;
+          color: white;
+        }
+
+        #btnDelete {
+          background-color: white; 
+          color: black; 
+          border: 2px solid #f44336;
+        }
+
+        #btnDelete:hover {
+          background-color: #f44336;
+          color: white;
+        }
+
+        #btnClear {
+          background-color: white;
+          color: black;
+          border: 2px solid #e7e7e7;
+        }
+
+        btnClear:hover {
+            background-color: #e7e7e7;
+        }
+        
+       /* #gvPoster {
+            display:none;
+        }*/
+
+    </style>
 </head>
     
 <body>
-    <form id="form1" runat="server">
-        <asp:HiddenField ID="hfProductID" runat="server" />
-        <div>
-            <table>
-                <tr>
-                    <td>
-                        <asp:Label Text="Name"  runat="server"/>
-                    </td>
-                    <td colspan="2">
-                        <asp:TextBox ID="txtName" runat="server"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label Text="Title"  runat="server"/>
-                    </td>
-                    <td colspan="2">
-                        <asp:TextBox Id = 'txtTitle' runat="server"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <asp:Label Text="Description"  runat="server"/>
-                    </td>
-                    <td colspan="2">
-                        <asp:TextBox ID="txtDescription" runat="server"/>
-                    </td>
-                </tr>
+    <p style =""><strong>Announcement Project</strong></p>
 
-                <tr>
-                    <td>
-                        <asp:Label Text="DateAdd"  runat="server"/>
-                    </td>
-                    <td colspan="2">
-                        <asp:TextBox ID="txtDateAdd" runat="server"/><%-- MaximumValue="1/1/2050" MinimumValue="2000/1/1" Type="Date" Format="yyyy MM dd"/>--%>
+    <div id="Content">
+        <form id="form1" runat="server">
+            <asp:HiddenField ID="hfProductID" runat="server" />
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <asp:Label Text="Назва"  runat="server"/>
+                        </td>
+                        <td colspan="2">
+                            <asp:TextBox ID="txtName" runat="server"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label Text="Заголовок"  runat="server"/>
+                        </td>
+                        <td colspan="2">
+                            <asp:TextBox Id = 'txtTitle' runat="server"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            <asp:Label Text="Опис"  runat="server"/>
+                        </td>
+                        <td colspan="2">
+                            <asp:TextBox ID="txtDescription" runat="server"/>
+                        </td>
+                    </tr>
 
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <asp:Label Text="Дата"  runat="server"/>
+                        </td>
+                        <td colspan="2">
+                            <asp:TextBox ID="txtDateAdd" runat="server"/><%-- MaximumValue="1/1/2050" MinimumValue="2000/1/1" Type="Date" Format="yyyy MM dd"/>--%>
 
-                <tr>
-                    <td></td>
-                    <td colspan="3">
-                        <asp:Button Text="Save" id="btnSave" runat="server" OnClick="Unnamed5_Click"/>
-                        <asp:Button Text="Delete" id="btnDelete" runat="server" OnClick="btnDelete_Click"/>
-                        <asp:Button Text="Change" id="btnChange" runat="server"/>
-                        <asp:Button Text="Clear" id="btnClear" runat="server" OnClick="btnClear_Click" />
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td></td>
-                    <td colspan="2">
-                        <asp:Label Text="message" ID="lbSucessMessage" runat="server" ForeColor="Green"></asp:Label>        
-                    </td>
-                </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="3">
+                            <asp:Button Text="Показати поля" id="btnShow" runat="server" OnClick="btnShow_Click" CssClass="button" />
+                            <asp:Button Text="Збререгти" id="btnSave" runat="server" OnClick="Unnamed5_Click" CssClass="button" />
+                            <asp:Button Text="Видалити" id="btnDelete" runat="server" OnClick="btnDelete_Click" CssClass="button" />                       
+                            <asp:Button Text="Очистити" id="btnClear" runat="server" OnClick="btnClear_Click" CssClass="button" />
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td></td>
-                    <td colspan="2">
-                        <asp:Label Text="message" ID="lbErrorMessage" runat="server" ForeColor="Red"></asp:Label>        
-                    </td>
-                </tr>
-            </table>
+                    <tr>
+                        <td></td>
+                        <td colspan="2">
+                            <asp:Label Text="message" ID="lbSucessMessage" runat="server" ForeColor="Green" ></asp:Label>        
+                        </td>
+                    </tr>
 
-            <br />
+                    <tr>
+                        <td></td>
+                        <td colspan="2">
+                            <asp:Label Text="message" ID="lbErrorMessage" runat="server" ForeColor="Red" ></asp:Label>        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2">
+                            <asp:Label Text="message" ID="test" runat="server" ForeColor="Red" ></asp:Label>        
+                        </td>
+                    </tr>
+                </table>
 
-            <asp:GridView ID="gvProduct" runat="server" AutoGenerateColumns="false" Height="165px" Width="745px">
-                <Columns>
-                    <asp:BoundField DataField="name" HeaderText="name" />
-                    <asp:BoundField DataField="title" HeaderText="title" />
-                    <asp:BoundField DataField="description" HeaderText="description" />
-                    <asp:BoundField DataField="date" HeaderText="dateAdd" />
-                    <asp:TemplateField>
-                        <ItemTemplate>
-                            <asp:LinkButton Text="text" ID="lnkSelect" CommandArgument="<% Eval(ProductID) %>" runat="server">
-                            </asp:LinkButton>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
-            </asp:GridView>
+                <br />
 
-        </div>
-    </form>
+                <asp:GridView ID="gvPoster" runat="server" AutoGenerateColumns="false" Height="165px" Width="745px" >
+                    <Columns>
+                       
+                        <asp:BoundField DataField="name" HeaderText="name" />
+                        <asp:BoundField DataField="title" HeaderText="title" />
+                        <asp:BoundField DataField="description" HeaderText="description" />
+                        <asp:BoundField DataField="dateAdd" HeaderText="dateAdd" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:LinkButton Text="Вибрати" ID="lnkSelect" CommandArgument='<%# Eval("AnnouncId") %>' runat="server" OnClick="itemSelect">
+                                </asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+
+            </div>
+        </form>
+    </div>
+
 </body>
 </html>

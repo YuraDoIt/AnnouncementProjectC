@@ -69,6 +69,15 @@ namespace WebApplication1
         protected global::System.Web.UI.WebControls.TextBox txtDateAdd;
 
         /// <summary>
+        /// btnShow элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnShow;
+
+        /// <summary>
         /// btnSave элемент управления.
         /// </summary>
         /// <remarks>
@@ -85,15 +94,6 @@ namespace WebApplication1
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDelete;
-
-        /// <summary>
-        /// btnChange элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnChange;
 
         /// <summary>
         /// btnClear элемент управления.
@@ -123,12 +123,21 @@ namespace WebApplication1
         protected global::System.Web.UI.WebControls.Label lbErrorMessage;
 
         /// <summary>
-        /// gvProduct элемент управления.
+        /// test элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvProduct;
+        protected global::System.Web.UI.WebControls.Label test;
+
+        /// <summary>
+        /// gvPoster элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvPoster;
     }
 }
