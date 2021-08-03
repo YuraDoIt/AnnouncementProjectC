@@ -108,6 +108,11 @@
             background-color: #e7e7e7;
         }
         
+        #similar {
+            background-color: white; 
+            color: black;
+            border: 2px solid #4CAF50;
+        }
        /* #gvPoster {
             display:none;
         }*/
@@ -141,7 +146,7 @@
                     </tr>
                     <tr>
                         <td> 
-                            <asp:Label Text="Опис"  runat="server"/>
+                            <asp:Label Text="Опис"  runat="server" label="Опис"/>
                         </td>
                         <td colspan="2">
                             <asp:TextBox ID="txtDescription" runat="server"/>
@@ -153,7 +158,7 @@
                             <asp:Label Text="Дата"  runat="server"/>
                         </td>
                         <td colspan="2">
-                            <asp:TextBox ID="txtDateAdd" runat="server"/><%-- MaximumValue="1/1/2050" MinimumValue="2000/1/1" Type="Date" Format="yyyy MM dd"/>--%>
+                            <asp:TextBox ID="txtDateAdd" runat="server" /><%-- MaximumValue="1/1/2050" MinimumValue="2000/1/1" Type="Date" Format="yyyy MM dd"/>--%>
 
                         </td>
                     </tr>
@@ -165,20 +170,21 @@
                             <asp:Button Text="Збререгти" id="btnSave" runat="server" OnClick="Unnamed5_Click" CssClass="button" />
                             <asp:Button Text="Видалити" id="btnDelete" runat="server" OnClick="btnDelete_Click" CssClass="button" />                       
                             <asp:Button Text="Очистити" id="btnClear" runat="server" OnClick="btnClear_Click" CssClass="button" />
+                            <asp:Button Text="Топ 3 " id="similar" runat="server" OnClick="btnSimilar_Click" CssClass="button" />
                         </td>
                     </tr>
 
                     <tr>
                         <td></td>
                         <td colspan="2">
-                            <asp:Label Text="message" ID="lbSucessMessage" runat="server" ForeColor="Green" ></asp:Label>        
+                            <asp:Label Text="" ID="lbSucessMessage" runat="server" ForeColor="Green" ></asp:Label>        
                         </td>
                     </tr>
 
                     <tr>
                         <td></td>
                         <td colspan="2">
-                            <asp:Label Text="message" ID="lbErrorMessage" runat="server" ForeColor="Red" ></asp:Label>        
+                            <asp:Label Text="" ID="lbErrorMessage" runat="server" ForeColor="Red" ></asp:Label>        
                         </td>
                     </tr>
                     <tr>

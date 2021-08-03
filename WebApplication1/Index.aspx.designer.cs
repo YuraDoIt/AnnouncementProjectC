@@ -105,6 +105,15 @@ namespace WebApplication1
         protected global::System.Web.UI.WebControls.Button btnClear;
 
         /// <summary>
+        /// similar элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button similar;
+
+        /// <summary>
         /// lbSucessMessage элемент управления.
         /// </summary>
         /// <remarks>
