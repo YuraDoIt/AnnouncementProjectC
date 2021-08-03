@@ -251,8 +251,21 @@ namespace WebApplication1
                 }
             }
 
-            
+            test.Text = Convert.ToString(obj.Length);
 
-        }                                   
+        }           
+        
+        static public bool CompareField(string oneField, string secondField)
+        {
+            if(oneField == "" || secondField == "")
+            {
+                return false;
+            }
+            else
+            {
+                string[] First = oneField.Split(" ");
+                return true;
+            }
+        }
     }
 }

@@ -113,6 +113,14 @@
             color: black;
             border: 2px solid #4CAF50;
         }
+        #lbSucessMessage{
+            color: white;
+            padding: 8px;
+            font-family: Arial;
+        }
+        #Content{
+            font-family: Arial
+        }
        /* #gvPoster {
             display:none;
         }*/
