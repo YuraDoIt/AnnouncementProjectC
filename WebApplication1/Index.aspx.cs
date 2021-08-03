@@ -243,7 +243,7 @@ namespace WebApplication1
                                 announcId = reader.GetInt32(0),
                                 announcTitle = reader.GetString(1),
                                 description = reader.GetString(2)
-                            }) ;
+                            });
                             obj = list.ToArray();
                         }
                     }
@@ -257,13 +257,28 @@ namespace WebApplication1
         
         static public bool CompareField(string oneField, string secondField)
         {
+            int countOfSimilar = 0;
+
             if(oneField == "" || secondField == "")
             {
                 return false;
             }
             else
             {
-                string[] First = oneField.Split(" ");
+                string[] firstSub = oneField.Split(' ');
+                string[] secondSub = secondField.Split(' ');
+
+                for(int i = 0; i< firstSub.Length; i++)
+                {
+                    for(int j = 0; j < secondSub.Length; j++)
+                    {
+                        if (firstSub[i] == secondSub[j])
+                        {
+                            countOfSimilar++;
+                            return true;
+                        }
+                    }
+                }
                 return true;
             }
         }
