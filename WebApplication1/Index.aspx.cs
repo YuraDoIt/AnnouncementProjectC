@@ -34,7 +34,7 @@ namespace WebApplication1
         {
             if (!IsPostBack)
             {
-                clearFields();              
+                clearFields();
             }
         }
 
@@ -45,11 +45,11 @@ namespace WebApplication1
 
         protected void Unnamed5_Click(object sender, EventArgs e)
         {
-            if(txtName.Text != "" || txtTitle.Text != "" || txtDescription.Text != "") { 
-                try { 
+            if (txtName.Text != "" || txtTitle.Text != "" || txtDescription.Text != "") {
+                try {
                     using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
                     {
-                    
+
                         sqlCon.Open();
                         MySqlCommand sqlCmd = new MySqlCommand("posterAddorEdit", sqlCon);
                         sqlCmd.CommandType = CommandType.StoredProcedure;
@@ -58,14 +58,15 @@ namespace WebApplication1
                         sqlCmd.Parameters.AddWithValue("_name", txtName.Text.Trim());
                         sqlCmd.Parameters.AddWithValue("_title", txtTitle.Text.Trim());
                         sqlCmd.Parameters.AddWithValue("_description", txtDescription.Text.Trim());
+
                         if (txtDateAdd.Text == "")
                         {
                             var dateString2 = DateTime.Now.ToString("yyyy-MM-dd");
                             sqlCmd.Parameters.AddWithValue("_dateAdd", dateString2);
                         }
-                        else 
-                        { 
-                            sqlCmd.Parameters.AddWithValue("_dateAdd", Convert.ToDateTime(txtDateAdd.Text)); 
+                        else
+                        {
+                            sqlCmd.Parameters.AddWithValue("_dateAdd", Convert.ToDateTime(txtDateAdd.Text));
                         }
                         sqlCmd.ExecuteNonQuery();
 
@@ -90,7 +91,7 @@ namespace WebApplication1
         //Запит на видалення
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            
+
             using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
             {
                 sqlCon.Open();
@@ -99,7 +100,7 @@ namespace WebApplication1
 
                 sqlCmd.Parameters.AddWithValue("_announcId", Convert.ToInt32(hfProductID.Value == "" ? "0" : hfProductID.Value));
                 sqlCmd.ExecuteNonQuery();
-   
+
                 lbSucessMessage.Text = "Успішно видалено";
                 clearFields();
             }
@@ -140,7 +141,7 @@ namespace WebApplication1
 
         //Вивести всю таблицю
         protected void btnShow_Click(object sender, EventArgs e)
-        {          
+        {
             try
             {
                 count++;
@@ -163,13 +164,13 @@ namespace WebApplication1
             {
                 ErrorApper();
                 throw ex;
-            }          
+            }
         }
 
         //вибрати поелементно
         protected void itemSelect(object sender, EventArgs e)
         {
-            try { 
+            try {
                 int AnnouncId = Convert.ToInt32((sender as LinkButton).CommandArgument);
                 using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
                 {
@@ -179,7 +180,7 @@ namespace WebApplication1
                     sqlDat.SelectCommand.CommandType = CommandType.StoredProcedure;
                     DataTable dtbl = new DataTable();
                     sqlDat.Fill(dtbl);
-                    
+
                     txtName.Text = dtbl.Rows[0][1].ToString();
                     txtTitle.Text = dtbl.Rows[0][2].ToString();
                     txtDescription.Text = dtbl.Rows[0][3].ToString();
@@ -187,7 +188,7 @@ namespace WebApplication1
 
                     SucessApper();
                     btnSave.Text = "Оновлено";
-                
+
                 }
             }
             catch (Exception ex)
@@ -198,7 +199,7 @@ namespace WebApplication1
         }
 
         protected void SucessApper()
-        {          
+        {
             lbErrorMessage.Text = "";
         }
         protected void ErrorApper()
@@ -214,16 +215,44 @@ namespace WebApplication1
             using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
             {
 
-                using(MySqlCommand cmdCount = new MySqlCommand(CountQuery, sqlCon))
+                using (MySqlCommand cmdCount = new MySqlCommand(CountQuery, sqlCon))
                 {
                     sqlCon.Open();
                     RowCount = Convert.ToInt32(cmdCount.ExecuteScalar());
                     test.Text = Convert.ToString(RowCount);
                 }
-                
+
             }
+
+            string topQuery = "Select announcId, title, `description` From announcement";
+            //Announcement[] obj = new Announcement[RowCount];
+            Announcement[] obj = null;
+
+            using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmdTop = new MySqlCommand(topQuery, sqlCon))
+                {
+                    sqlCon.Open();
+                    using(var reader = cmdTop.ExecuteReader())
+                    {
+                        var list = new List<Announcement>();
+                        while (reader.Read())
+                        {
+                            list.Add(new Announcement
+                            {
+                                announcId = reader.GetInt32(0),
+                                announcTitle = reader.GetString(1),
+                                description = reader.GetString(2)
+                            }) ;
+                            obj = list.ToArray();
+                        }
+                    }
+                    
+                }
+            }
+
             
-           // Announcement[] obj = new Announcement[];
-        }
+
+        }                                   
     }
 }
