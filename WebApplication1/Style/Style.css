@@ -8,7 +8,7 @@
 
 #Content {
     padding: 20px;
-    /*min-height: calc(100vh - (40px));*/
+    min-height: calc(100vh - (40px));
     padding-bottom: 80px;
 }
 
@@ -22,6 +22,8 @@ p {
     font-weight: normal;
 }
 
+
+/*Стилі для кнопок*/
 #btnShow {
     margin-right: 30px;
 }
@@ -39,7 +41,7 @@ p {
     cursor: pointer;
     border-radius: 12px;
 }
-/*Стилі для кнопок*/
+
 #btnShow {
     background-color: white;
     color: black;
@@ -57,10 +59,10 @@ p {
     border: 2px solid #008CBA;
 }
 
-    #btnSave:hover {
-        background-color: #008CBA;
-        color: white;
-    }
+#btnSave:hover {
+    background-color: #008CBA;
+    color: white;
+}
 
 #btnDelete {
     background-color: white;
@@ -79,7 +81,7 @@ p {
     border: 2px solid #e7e7e7;
 }
 
-btnClear:hover {
+#btnClear:hover {
     background-color: #e7e7e7;
 }
 
@@ -89,10 +91,33 @@ btnClear:hover {
     border: 2px solid #4CAF50;
 }
 
+#similar:hover {
+    background-color:green;
+}
+
+/*END - Стилі для кнопок*/
+
 #lbSucessMessage {
     color: white;
     padding: 8px;
     font-family: Arial;
+}
+
+.TextBox {
+    width: 185px;
+    border: 2px solid #5badff;
+    box-shadow: 0 0 27px #e7e7e7 inset;
+    transition: 500ms all ease;
+    padding: 3px 3px 3px 3px;
+
+
+    position: relative;
+    left: 0;
+    outline: none;
+   /* border: 1px solid #cdcdcd;*/
+    border-color: rgba(0,0,0,.15);
+    background-color: white;
+    font-size: 16px;
 }
 
 #Content {
@@ -102,12 +127,13 @@ btnClear:hover {
     /*margin-bottom: 200px;*/
 }
 
-
-/*GridVeiwStyle*/
-main{
-    margin-bottom:200px;
+main {
+    margin-bottom: 200px;
 }
 
+
+
+/*GridVeiwStyle*/
 
 .mydatagrid {
     width: 80%;

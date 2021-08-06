@@ -50,7 +50,7 @@
                                 <asp:Label Text="Назва" runat="server" />
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtName" runat="server" />
+                                <asp:TextBox ID="txtName" runat="server"  CssClass="TextBox" />
                             </td>
                         </tr>
                         <tr>
@@ -58,7 +58,7 @@
                                 <asp:Label Text="Заголовок" runat="server" />
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID='txtTitle' runat="server" />
+                                <asp:TextBox ID='txtTitle' runat="server"  CssClass="TextBox"/>
                             </td>
                         </tr>
                         <tr>
@@ -66,7 +66,7 @@
                                 <asp:Label Text="Опис" runat="server" label="Опис" />
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtDescription" runat="server" />
+                                <asp:TextBox ID="txtDescription" runat="server"  CssClass="TextBox"/>
                             </td>
                         </tr>
 
@@ -75,7 +75,7 @@
                                 <asp:Label Text="Дата" runat="server" />
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtDateAdd" runat="server"  onclick="tryPlaceholder(this,'yyyy-MM-dd')"/>
+                                <asp:TextBox ID="txtDateAdd" runat="server" CssClass="TextBox" onclick="tryPlaceholder(this,'yyyy-MM-dd')"/>
                             </td>
                         </tr>
 

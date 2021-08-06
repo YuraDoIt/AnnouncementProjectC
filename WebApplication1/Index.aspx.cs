@@ -74,7 +74,8 @@ namespace WebApplication1
                         sqlCmd.ExecuteNonQuery();
 
                         SucessApper("Успішно додано");
-                        lbSucessMessage.Text = "Успішно додано";                      
+                        btnShow_Click(sender, e);
+                        SucessApper("Успішно додано");                     
                     }
                 }
                 catch (Exception ex)
@@ -94,21 +95,25 @@ namespace WebApplication1
         protected void btnDelete_Click(object sender, EventArgs e)
         {
 
+            if (hfProductID.Value != "") { 
+                using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
+                {
+                    sqlCon.Open();
+                    MySqlCommand sqlCmd = new MySqlCommand("announcDelete", sqlCon);
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
 
-            using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
-            {
-                sqlCon.Open();
-                MySqlCommand sqlCmd = new MySqlCommand("announcDelete", sqlCon);
-                sqlCmd.CommandType = CommandType.StoredProcedure;
+                    sqlCmd.Parameters.AddWithValue("_announcId", Convert.ToInt32(hfProductID.Value == "" ? "0" : hfProductID.Value));
+                    sqlCmd.ExecuteNonQuery();
 
-                sqlCmd.Parameters.AddWithValue("_announcId", Convert.ToInt32(hfProductID.Value == "" ? "0" : hfProductID.Value));
-                sqlCmd.ExecuteNonQuery();
-
-                lbSucessMessage.Text = "Успішно видалено";
-                GridFill();
-                clearFields();
+                    SucessApper("Успішно видалено");
+                    GridFill();
+                    clearFields();
+                }
             }
-
+            else
+            {
+                ErrorApper("Не вибрано жодного поля");
+            }
         }
 
         //Для виведення інформації про всі поля 
@@ -211,6 +216,7 @@ namespace WebApplication1
         }
         public void clearFields()
         {
+            hfProductID.Value = "";
             txtName.Text = "";
             txtTitle.Text = "";
             txtDescription.Text = "";
@@ -223,6 +229,7 @@ namespace WebApplication1
         protected void btnSimilar_Click(object sender, EventArgs e)
         {
             string CountQuery = "Select count(announcId) From announcement";
+
             var RowCount = 0;
             using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
             {
@@ -236,7 +243,7 @@ namespace WebApplication1
             test.Text = "";
 
             string topQuery = "Select announcId, title, `description` From announcement";
-            //Announcement[] obj = new Announcement[RowCount];
+
             Announcement[] obj = null;
 
             using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
@@ -262,10 +269,9 @@ namespace WebApplication1
                 }
             }
 
-            if (obj == null) lbErrorMessage.Text = "Не має жодного поля";
+            if (obj == null) ErrorApper("Не має жодного поля");
 
-            //test.Text = Convert.ToString(obj.Length);
-            //var Res = new List<Int32>();
+
             var listRes = new List<Announcement>();
 
             int i, j = 0;
@@ -277,61 +283,44 @@ namespace WebApplication1
                         && CompareField(obj[i].description, obj[j].description) == true)
                     {
                         test.Text += Convert.ToString("" + obj[i].announcId + " " + obj[i].announcTitle + " " + obj[i].description + "   " + obj[j].announcId + " " + obj[j].announcTitle + " " + obj[j].description + "<br>");
-                        listRes.Add(obj[i]);
-                        listRes.Add(obj[j]);
+                        if (listRes.Contains(obj[i]))
+                        { }
+                        else  listRes.Add(obj[i]);
+                        if (listRes.Contains(obj[j]))
+                        { }
+                        else  listRes.Add(obj[j]);
                     }
                 }
+            }
+
+            foreach (var item in listRes)
+            {
+                test.Text += "<br><br>" + item.announcId + " " + item.announcTitle + "<br> "; 
             }
 
             //Find top 3 element
-            var dictionary = new Dictionary<Announcement, int>();
-
-
-            //foreach(var num in listRes)
-            //{
-            //    if (dictionary.ContainsKey(num))
-            //        dictionary[num]++;
-            //    else
-            //        dictionary.Add(num, 1);
-            //}
-
-            ////2
-            for (int l = 0; l < listRes.Count; l++)
-            {
-                foreach (KeyValuePair<Announcement, int> el in dictionary)
-                {
-                    if ((el.Key.announcTitle == listRes[i].announcTitle) && (el.Key.description == listRes[i].description))
-                    {
-                        dictionary[listRes[i]]++;
-                    }
-                    else
-                    {
-                        dictionary.Add(listRes[i], 1);
-                    }
-                }
-                //if(dictionary.ElementAt(i).Key.announcTitle == listRes[i])
-            }
-
-
-            //int dicLich = 0;
-            //foreach (Announcement num in listRes)
-            //{
-            //    //if(num.announcTitle == dictionary.Value )
-            //    if (dictionary.ContainsValue(num))
-            //    {
-
-            //        dictionary[dicLich]++;
-            //    }
-            //    else
-            //        dictionary.Add(1, num);
-            //}
+            var listSel = from announ in listRes
+                          group announ by new
+                          {
+                              announ.announcTitle,
+                              announ.description,
+                          } into g
+                          select new
+                          {
+                              g.Key.announcTitle,
+                              g.Key.description,
+                              AnnounCount = g.Count()
+                          };
 
             test.Text += "<br>";
 
-            foreach (KeyValuePair<Announcement, int> a in dictionary)
+            foreach (var a in listSel)
             {
-                test.Text += Convert.ToString(a.Key + " " + a.Value + "<br>");
+                test.Text += "<br>Toп 3 Announcement";
+                test.Text += Convert.ToString(a.announcTitle + " " + a.description + " Count: " + a.AnnounCount + "<br>");
             }
+
+            
 
 
         }
@@ -371,5 +360,6 @@ namespace WebApplication1
             return result;
         }
         #endregion
+
     }
 }
