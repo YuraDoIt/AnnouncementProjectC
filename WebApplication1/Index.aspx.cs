@@ -61,7 +61,6 @@ namespace WebApplication1
                         MySqlCommand sqlCmd = new MySqlCommand("posterAddorEdit", sqlCon);
                         sqlCmd.CommandType = CommandType.StoredProcedure;
                         sqlCmd.Parameters.AddWithValue("_announcementID", Convert.ToInt32(hfProductID.Value == "" ? "0" : hfProductID.Value));
-                        //test.Text = Convert.ToString(hfProductID.Value); Для перевірки id
                         sqlCmd.Parameters.AddWithValue("_name", txtName.Text.Trim());
                         sqlCmd.Parameters.AddWithValue("_title", txtTitle.Text.Trim());
                         sqlCmd.Parameters.AddWithValue("_description", txtDescription.Text.Trim());
@@ -301,11 +300,7 @@ namespace WebApplication1
                 }
             }
 
-            //foreach (var item in listRes)
-            //{
-            //    test.Text += "<br><br>" + item.announcId + " " + item.announcTitle + " " + item.description + "<br> ";
-            //}
-
+            
             //Find top 3 element
             var listSel = from announ in listRes
                           group announ by new
