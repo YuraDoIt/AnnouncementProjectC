@@ -72,7 +72,7 @@
                                 <asp:Label Text="Дата" runat="server" />
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtDateAdd" runat="server" CssClass="TextBox" onclick="tryPlaceholder(this,'yyyy-MM-dd')"/>
+                                <asp:TextBox ID="txtDateAdd" runat="server" CssClass="TextBox" <%--onclick="tryPlaceholder(this,'yyyy-MM-dd')"--%>/>
                             </td>
                         </tr>
 
@@ -80,7 +80,7 @@
                             <td></td>
                             <td colspan="3">
                                 <asp:Button Text="Показати поля" ID="btnShow" runat="server" OnClick="btnShow_Click" CssClass="button" />
-                                <asp:Button Text="Збререгти" ID="btnSave" runat="server" OnClick="Unnamed5_Click" CssClass="button" />
+                                <asp:Button Text="Збререгти" ID="btnSave" runat="server" OnClick="addOrChange" CssClass="button" />
                                 <asp:Button Text="Видалити" ID="btnDelete" runat="server" OnClick="btnDelete_Click" CssClass="button" />
                                 <asp:Button Text="Очистити" ID="btnClear" runat="server" OnClick="btnClear_Click" CssClass="button" />
                                 <asp:Button Text="Топ 3" ID="similar" runat="server" OnClick="btnSimilar_Click" CssClass="button" />

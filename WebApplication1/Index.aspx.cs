@@ -12,9 +12,12 @@ namespace WebApplication1
 {
     class Announcement
     {
+        private string name;
         private int anounceid;
         private string title;
         private string descript;
+
+        public string Name { get; set; }
         public int announcId { get { return anounceid; } set { anounceid = value; } }
         public string announcTitle { get { return title; } set { title = value; } }
         public string description { get { return descript; } set { descript = value; } }
@@ -44,7 +47,8 @@ namespace WebApplication1
 
         }
 
-        protected void Unnamed5_Click(object sender, EventArgs e)
+        //addOrEdit button
+        protected void addOrChange(object sender, EventArgs e)
         {
             if (txtName.Text != "" || txtTitle.Text != "" || txtDescription.Text != "")
             {
@@ -69,7 +73,7 @@ namespace WebApplication1
                         }
                         else
                         {
-                            sqlCmd.Parameters.AddWithValue("_dateAdd", Convert.ToDateTime(txtDateAdd.Text));
+                            sqlCmd.Parameters.AddWithValue("_dateAdd", Convert.ToString(txtDateAdd.Text));
                         }
                         sqlCmd.ExecuteNonQuery();
 
@@ -128,9 +132,9 @@ namespace WebApplication1
                 sqlDat.Fill(dtbl);
                 gvPoster.DataSource = dtbl;
                 gvPoster.DataBind();
+                sqlCon.Close();
             }
         }
-
 
         protected void btnClear_Click(object sender, EventArgs e)
         {
@@ -228,6 +232,8 @@ namespace WebApplication1
 
         protected void btnSimilar_Click(object sender, EventArgs e)
         {
+
+            //Find out how many row in announcement
             string CountQuery = "Select count(announcId) From announcement";
 
             var RowCount = 0;
@@ -242,7 +248,7 @@ namespace WebApplication1
 
             test.Text = "";
 
-            string topQuery = "Select announcId, title, `description` From announcement";
+            string topQuery = "Select  name, announcId, title, `description` From announcement";
 
             Announcement[] obj = null;
 
@@ -258,13 +264,15 @@ namespace WebApplication1
                         {
                             list.Add(new Announcement
                             {
-                                announcId = reader.GetInt32(0),
-                                announcTitle = reader.GetString(1),
-                                description = reader.GetString(2)
+                                Name = reader.GetString(0),
+                                announcId = reader.GetInt32(1),
+                                announcTitle = reader.GetString(2),
+                                description = reader.GetString(3)
                             });
                             obj = list.ToArray();
                         }
                     }
+                    sqlCon.Close();
 
                 }
             }
@@ -315,17 +323,28 @@ namespace WebApplication1
             test.Text += "<br>";
 
             test.Text += "<br>Toп 3 Announcement<br><br> Із параметрами:<br>";
+            List<Announcement> top3 = new List<Announcement>();
             foreach (var a in listSel)
             {
-                if(a.AnnounCount == 3)
+                if(a.AnnounCount == 3 || a.AnnounCount > 3)
                 {
                     foreach(var lis in listRes)
                     {
-                        if(lis.announcTitle == a.announcTitle && lis.description == a.description) { 
-                            test.Text += Convert.ToString(" " + lis.announcId  + " " +  lis.announcTitle + " "+ lis.description + "<br>");
+                        if(lis.announcTitle == a.announcTitle && lis.description == a.description) {
+                            top3.Add(lis);
+                            
                         }
                     }                   
-                }                             
+                }   
+                else
+                {
+                    test.Text += "Такої кількості однакових полів не має";
+                }
+            }
+
+            foreach(var lis in top3)
+            {
+                test.Text += Convert.ToString(" " + lis.Name + " " + lis.announcId + " " + lis.announcTitle + " " + lis.description + "<br>");
             }
 
         }
