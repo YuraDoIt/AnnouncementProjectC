@@ -295,7 +295,7 @@ namespace WebApplication1
 
             //foreach (var item in listRes)
             //{
-            //    test.Text += "<br><br>" + item.announcId + " " + item.announcTitle + "<br> "; 
+            //    test.Text += "<br><br>" + item.announcId + " " + item.announcTitle + " " + item.description + "<br> ";
             //}
 
             //Find top 3 element
@@ -314,11 +314,18 @@ namespace WebApplication1
 
             test.Text += "<br>";
 
-            test.Text += "<br>Toп 3 Announcement<br><br>Параметри:<br>";
+            test.Text += "<br>Toп 3 Announcement<br><br> Із параметрами:<br>";
             foreach (var a in listSel)
             {
-                
-                test.Text += Convert.ToString(a.announcTitle + " " + a.description + " Count: " + a.AnnounCount + "<br>");
+                if(a.AnnounCount == 3)
+                {
+                    foreach(var lis in listRes)
+                    {
+                        if(lis.announcTitle == a.announcTitle && lis.description == a.description) { 
+                            test.Text += Convert.ToString(" " + lis.announcId  + " " +  lis.announcTitle + " "+ lis.description + "<br>");
+                        }
+                    }                   
+                }                             
             }
 
         }
