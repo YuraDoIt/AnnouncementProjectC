@@ -30,6 +30,7 @@ namespace WebApplication1
             Uid = root;
             Pwd = 123456;
         ";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -45,8 +46,10 @@ namespace WebApplication1
 
         protected void Unnamed5_Click(object sender, EventArgs e)
         {
-            if (txtName.Text != "" || txtTitle.Text != "" || txtDescription.Text != "") {
-                try {
+            if (txtName.Text != "" || txtTitle.Text != "" || txtDescription.Text != "")
+            {
+                try
+                {
                     using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
                     {
 
@@ -70,14 +73,13 @@ namespace WebApplication1
                         }
                         sqlCmd.ExecuteNonQuery();
 
-                        SucessApper();
-                        lbSucessMessage.Text = "Успішно додано";
-                        GridFill();
+                        SucessApper("Успішно додано");
+                        lbSucessMessage.Text = "Успішно додано";                      
                     }
                 }
                 catch (Exception ex)
                 {
-                    ErrorApper();
+                    ErrorApper("Помилка із додаванням");
                     lbErrorMessage.Text = "Submited failed" + ex.Message;
                     throw ex;
                 }
@@ -92,6 +94,7 @@ namespace WebApplication1
         protected void btnDelete_Click(object sender, EventArgs e)
         {
 
+
             using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
             {
                 sqlCon.Open();
@@ -102,8 +105,10 @@ namespace WebApplication1
                 sqlCmd.ExecuteNonQuery();
 
                 lbSucessMessage.Text = "Успішно видалено";
+                GridFill();
                 clearFields();
             }
+
         }
 
         //Для виведення інформації про всі поля 
@@ -121,20 +126,12 @@ namespace WebApplication1
             }
         }
 
-        public void clearFields()
-        {
-            txtName.Text = "";
-            txtTitle.Text = "";
-            txtDescription.Text = "";
-            txtDateAdd.Text = "";
-            btnSave.Text = "Save";
-        }
 
         protected void btnClear_Click(object sender, EventArgs e)
         {
             clearFields();
-            lbSucessMessage.Text = "Очищено успішно";
-            lbErrorMessage.Text = "";
+            SucessApper("Очищено успішно");
+            ErrorApper("");
             lbSucessMessage.Text = "";
         }
 
@@ -162,15 +159,16 @@ namespace WebApplication1
             }
             catch (Exception ex)
             {
-                ErrorApper();
+                ErrorApper("Помилка при виведені");
                 throw ex;
             }
         }
 
-        //вибрати поелементно
+        //Вибрати поелементно
         protected void itemSelect(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 int AnnouncId = Convert.ToInt32((sender as LinkButton).CommandArgument);
                 using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
                 {
@@ -181,32 +179,46 @@ namespace WebApplication1
                     DataTable dtbl = new DataTable();
                     sqlDat.Fill(dtbl);
 
+                    hfProductID.Value = dtbl.Rows[0][0].ToString();
+
                     txtName.Text = dtbl.Rows[0][1].ToString();
                     txtTitle.Text = dtbl.Rows[0][2].ToString();
                     txtDescription.Text = dtbl.Rows[0][3].ToString();
                     txtDateAdd.Text = dtbl.Rows[0][4].ToString();
 
-                    SucessApper();
+                    SucessApper("");
                     btnSave.Text = "Оновлено";
 
                 }
             }
             catch (Exception ex)
             {
-                ErrorApper();
+                ErrorApper("Помилка вибору");
                 throw ex;
             }
         }
 
-        protected void SucessApper()
+        #region Clear Fields
+        protected void SucessApper(string text)
         {
+            lbSucessMessage.Text = text;
             lbErrorMessage.Text = "";
         }
-        protected void ErrorApper()
+        protected void ErrorApper(string text)
         {
-            lbErrorMessage.Text = "Помилка";
+            lbErrorMessage.Text = text;
             lbSucessMessage.Text = "";
         }
+        public void clearFields()
+        {
+            txtName.Text = "";
+            txtTitle.Text = "";
+            txtDescription.Text = "";
+            txtDateAdd.Text = "";
+            btnSave.Text = "Save";
+            test.Text = "";
+        }
+        #endregion
 
         protected void btnSimilar_Click(object sender, EventArgs e)
         {
@@ -214,15 +226,14 @@ namespace WebApplication1
             var RowCount = 0;
             using (MySqlConnection sqlCon = new MySqlConnection(connectionString))
             {
-
                 using (MySqlCommand cmdCount = new MySqlCommand(CountQuery, sqlCon))
                 {
                     sqlCon.Open();
                     RowCount = Convert.ToInt32(cmdCount.ExecuteScalar());
-                    test.Text = Convert.ToString(RowCount);
                 }
-
             }
+
+            test.Text = "";
 
             string topQuery = "Select announcId, title, `description` From announcement";
             //Announcement[] obj = new Announcement[RowCount];
@@ -233,7 +244,7 @@ namespace WebApplication1
                 using (MySqlCommand cmdTop = new MySqlCommand(topQuery, sqlCon))
                 {
                     sqlCon.Open();
-                    using(var reader = cmdTop.ExecuteReader())
+                    using (var reader = cmdTop.ExecuteReader())
                     {
                         var list = new List<Announcement>();
                         while (reader.Read())
@@ -247,19 +258,92 @@ namespace WebApplication1
                             obj = list.ToArray();
                         }
                     }
-                    
+
                 }
             }
 
-            test.Text = Convert.ToString(obj.Length);
+            if (obj == null) lbErrorMessage.Text = "Не має жодного поля";
 
-        }           
-        
+            //test.Text = Convert.ToString(obj.Length);
+            //var Res = new List<Int32>();
+            var listRes = new List<Announcement>();
+
+            int i, j = 0;
+            for (i = 0; i < obj.Length; i++)
+            {
+                for (j = i + 1; j < obj.Length; j++)
+                {
+                    if (CompareField(obj[i].announcTitle, obj[j].announcTitle) == true
+                        && CompareField(obj[i].description, obj[j].description) == true)
+                    {
+                        //test.Text += Convert.ToString("" + obj[i].announcId + " " + obj[i].announcTitle + " " + obj[i].description + "   " + obj[j].announcId + " " + obj[j].announcTitle + " " + obj[j].description + "<br>");
+                        listRes.Add(obj[i]);
+                        listRes.Add(obj[j]);
+                    }
+                }
+            }
+
+            //Find top 3 element
+            var dictionary = new Dictionary<Announcement, int>();
+
+
+            //foreach(var num in listRes)
+            //{
+            //    if (dictionary.ContainsKey(num))
+            //        dictionary[num]++;
+            //    else
+            //        dictionary.Add(num, 1);
+            //}
+
+            ////2
+            for (int l = 0; l < listRes.Count; l++)
+            {
+                foreach (KeyValuePair<Announcement, int> el in dictionary)
+                {
+                    if ((el.Key.announcTitle == listRes[i].announcTitle) && (el.Key.description == listRes[i].description))
+                    {
+                        dictionary[listRes[i]]++;
+                    }
+                    else
+                    {
+                        dictionary.Add(listRes[i], 1);
+                    }
+                }
+                //if(dictionary.ElementAt(i).Key.announcTitle == listRes[i])
+            }
+
+
+            //int dicLich = 0;
+            //foreach (Announcement num in listRes)
+            //{
+            //    //if(num.announcTitle == dictionary.Value )
+            //    if (dictionary.ContainsValue(num))
+            //    {
+
+            //        dictionary[dicLich]++;
+            //    }
+            //    else
+            //        dictionary.Add(1, num);
+            //}
+
+            test.Text += "<br>";
+
+            foreach (KeyValuePair<Announcement, int> a in dictionary)
+            {
+                test.Text += Convert.ToString(a.Key + " " + a.Value + "<br>");
+            }
+
+
+        }
+
+        #region MethodCompare Fields
+        //Метод для визнчення наявності слів
         static public bool CompareField(string oneField, string secondField)
         {
             int countOfSimilar = 0;
+            bool result = true;
 
-            if(oneField == "" || secondField == "")
+            if (oneField == "" || secondField == "")
             {
                 return false;
             }
@@ -268,19 +352,24 @@ namespace WebApplication1
                 string[] firstSub = oneField.Split(' ');
                 string[] secondSub = secondField.Split(' ');
 
-                for(int i = 0; i< firstSub.Length; i++)
+                for (int i = 0; i < firstSub.Length; i++)
                 {
-                    for(int j = 0; j < secondSub.Length; j++)
+                    for (int j = 0; j < secondSub.Length; j++)
                     {
                         if (firstSub[i] == secondSub[j])
                         {
                             countOfSimilar++;
-                            return true;
+                            result = true;
+                        }
+                        else
+                        {
+                            result = false;
                         }
                     }
                 }
-                return true;
             }
+            return result;
         }
+        #endregion
     }
 }
