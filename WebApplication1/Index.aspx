@@ -72,7 +72,7 @@
                                 <asp:Label Text="Дата" runat="server" />
                             </td>
                             <td colspan="2">
-                                <asp:TextBox ID="txtDateAdd" runat="server" CssClass="TextBox" <%--onclick="tryPlaceholder(this,'yyyy-MM-dd')"--%>/>
+                                <asp:TextBox ID="txtDateAdd" runat="server" CssClass="TextBox" /><%--onclick="tryPlaceholder(this,'yyyy-MM-dd')"--%>
                             </td>
                         </tr>
 
