@@ -282,7 +282,7 @@ namespace WebApplication1
                     if (CompareField(obj[i].announcTitle, obj[j].announcTitle) == true
                         && CompareField(obj[i].description, obj[j].description) == true)
                     {
-                        test.Text += Convert.ToString("" + obj[i].announcId + " " + obj[i].announcTitle + " " + obj[i].description + "   " + obj[j].announcId + " " + obj[j].announcTitle + " " + obj[j].description + "<br>");
+                        //test.Text += Convert.ToString("" + obj[i].announcId + " " + obj[i].announcTitle + " " + obj[i].description + "   " + obj[j].announcId + " " + obj[j].announcTitle + " " + obj[j].description + "<br>");
                         if (listRes.Contains(obj[i]))
                         { }
                         else  listRes.Add(obj[i]);
@@ -293,10 +293,10 @@ namespace WebApplication1
                 }
             }
 
-            foreach (var item in listRes)
-            {
-                test.Text += "<br><br>" + item.announcId + " " + item.announcTitle + "<br> "; 
-            }
+            //foreach (var item in listRes)
+            //{
+            //    test.Text += "<br><br>" + item.announcId + " " + item.announcTitle + "<br> "; 
+            //}
 
             //Find top 3 element
             var listSel = from announ in listRes
@@ -314,14 +314,12 @@ namespace WebApplication1
 
             test.Text += "<br>";
 
+            test.Text += "<br>Toп 3 Announcement<br><br>Параметри:<br>";
             foreach (var a in listSel)
             {
-                test.Text += "<br>Toп 3 Announcement";
+                
                 test.Text += Convert.ToString(a.announcTitle + " " + a.description + " Count: " + a.AnnounCount + "<br>");
             }
-
-            
-
 
         }
 
