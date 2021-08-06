@@ -86,7 +86,7 @@
                                 <asp:Button Text="Збререгти" ID="btnSave" runat="server" OnClick="Unnamed5_Click" CssClass="button" />
                                 <asp:Button Text="Видалити" ID="btnDelete" runat="server" OnClick="btnDelete_Click" CssClass="button" />
                                 <asp:Button Text="Очистити" ID="btnClear" runat="server" OnClick="btnClear_Click" CssClass="button" />
-                                <asp:Button Text="Топ 3 " ID="similar" runat="server" OnClick="btnSimilar_Click" CssClass="button" />
+                                <asp:Button Text="Топ 3" ID="similar" runat="server" OnClick="btnSimilar_Click" CssClass="button" />
                             </td>
                         </tr>
 

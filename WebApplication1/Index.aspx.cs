@@ -276,7 +276,7 @@ namespace WebApplication1
                     if (CompareField(obj[i].announcTitle, obj[j].announcTitle) == true
                         && CompareField(obj[i].description, obj[j].description) == true)
                     {
-                        //test.Text += Convert.ToString("" + obj[i].announcId + " " + obj[i].announcTitle + " " + obj[i].description + "   " + obj[j].announcId + " " + obj[j].announcTitle + " " + obj[j].description + "<br>");
+                        test.Text += Convert.ToString("" + obj[i].announcId + " " + obj[i].announcTitle + " " + obj[i].description + "   " + obj[j].announcId + " " + obj[j].announcTitle + " " + obj[j].description + "<br>");
                         listRes.Add(obj[i]);
                         listRes.Add(obj[j]);
                     }
